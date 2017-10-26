@@ -12,7 +12,7 @@ import io.vertx.ext.web.handler.*;
 public class VertxMain {
 
     public static void main(String[] args){
-        RouterDemo.route1()
+        TemplateDemo.thymeleaf()
     }
 
     public static String firstMethod() {

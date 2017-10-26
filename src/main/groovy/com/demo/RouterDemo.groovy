@@ -122,7 +122,7 @@ public class RouterDemo {
                 })
             })
         })
-
+        routingContext.next();
         println "-----userList------- " + userList
         routingContext.response().putHeader("content-type", "application/json").end(userList);
     }
