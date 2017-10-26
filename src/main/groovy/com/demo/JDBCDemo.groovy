@@ -60,9 +60,7 @@ public class JDBCDemo {
         println "-----0-----------"
 
         JsonObject config = new JsonObject()
-//                .put("url", "jdbc:mysql:localhost:demo_lending?autoreconnect=true")
                 .put("url", "jdbc:mysql://localhost:3306/demo_lending?autoreconnect=true")
-//        url = "jdbc:mysql://localhost:3306/demo_lending?autoreconnect=true"
                 .put("user", "demo")
                 .put("password", "demo")
                 .put("driver_class", "com.mysql.jdbc.Driver")
