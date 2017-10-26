@@ -32,5 +32,27 @@ public class VertxTest {
 
     }
 
+    public static String web() {
+        def vertx = Vertx.vertx([
+                workerPoolSize: 40
+        ])
 
+        def server = vertx.createHttpServer()
+
+        def router = Router.router(vertx)
+
+        router.route().handler({ routingContext ->
+
+            // This handler will be called for every request
+            def response = routingContext.response()
+            response.putHeader("content-type", "text/plain")
+
+            // Write to the response and end it
+            response.end("Hello World from Vert.x-Web!")
+        })
+
+        server.requestHandler(router.&accept).listen(8085)
+        return "Success - 1"
+
+    }
 }
