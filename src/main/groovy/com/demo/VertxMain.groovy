@@ -9,10 +9,10 @@ import io.vertx.core.http.*;
 import io.vertx.ext.web.handler.*;
 
 
-public class VertxTest {
+public class VertxMain {
 
     public static void main(String[] args){
-        firstMethod()
+        RouterDemo.route1()
     }
 
     public static String firstMethod() {
