@@ -28,7 +28,7 @@ public class TemplateDemo extends AbstractVerticle {
             ctx.put("welcome", "Hi there!");
 
             // and now delegate to the engine to render it.
-            engine.render(ctx, "/webapp/template/thymeleaf/index.html", { res ->
+            engine.render(ctx, "main/webapp/template/thymeleaf/index.html", { res ->
                 if (res.succeeded()) {
                     ctx.response().end(res.result());
                 } else {
