@@ -5,9 +5,19 @@ import io.vertx.core.Vertx
 
 class VerticleTest {
 
+    static String verticle_id = ""
+
     public static void main(String[] arg) {
-        Vertx vertx = Vertx.vertx()
-        deployVerticleAsync(vertx)
+        Vertx vertx = createVertx()
+        deployVerticleWithOptions(vertx)
+    }
+
+    static def createVertx() {
+        return Vertx.vertx()
+    }
+
+    static def createVertexWithOptions() {
+        return Vertx.vertx([workerPoolSize: 40])
     }
 
     static def deployVerticleByInstance(Vertx vertx) {
@@ -21,15 +31,14 @@ class VerticleTest {
     }
 
     static def deployVerticleAsync(Vertx vertx) {
-        /* vertx.deployVerticle(new FirstVerticle(), { res ->
-             if (res.succeeded()) {
-                 println("Verticle has been deployed with id:- ${res.result()}")
-             } else {
-                 println("Deployment is failed")
-             }
-         })*/
-
-
+        vertx.deployVerticle(new FirstVerticle(), { res ->
+            if (res.succeeded()) {
+                println("Verticle has been deployed with id:- ${res.result()}")
+                verticle_id = res.result()
+            } else {
+                println("Deployment is failed")
+            }
+        })
 
         /*vertx.deployVerticle(new FirstVerticle(), new Handler<AsyncResult<String>>() {
             @Override
@@ -37,5 +46,27 @@ class VerticleTest {
                 System.out.println("FirstVerticle deployment complete")
             }
         })*/
+    }
+
+    static def deployVerticleWithOptions(Vertx vertx) {
+        def config = [name: "myVerticle", directory: "/home/vijay"]
+        def options = ["config": config, instances: 16]
+        vertx.deployVerticle("com.impl.verticle.FirstVerticle", options)
+
+    }
+
+    static def undeployVerticle(Vertx vertx) {
+        vertx.undeploy(verticle_id)
+    }
+
+    static def undeployVerticleAsync(Vertx vertx) {
+        vertx.undeploy(verticle_id, { res ->
+            if (res.succeeded()) {
+                println("Verticle has been un deployed")
+                verticle_id = res.result()
+            } else {
+                println("UnDeployment is failed")
+            }
+        })
     }
 }
