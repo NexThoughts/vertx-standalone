@@ -17,12 +17,16 @@ import java.util.stream.Collectors
 
 class FutureDemo extends AbstractVerticle {
     SQLClient dbclient = null
+    Vertx vertx = null
 
-    private void createDatabaseConnection() {
-        def vertx = Vertx.vertx([
+    private void createVertx() {
+        println "----- Creating Vertx -------"
+        vertx = Vertx.vertx([
                 workerPoolSize: 40
         ])
+    }
 
+    private void createDatabaseConnection() {
         println "----- Creating Database Connection 1 -------"
         JsonObject config = new JsonObject()
                 .put("url", "jdbc:mysql://localhost:3306/demo_lending?autoreconnect=true")
@@ -36,25 +40,14 @@ class FutureDemo extends AbstractVerticle {
 
     }
 
-//    private Future<Void> prepareDatabase() {
-//
-//        Future<Void> future = Future.future();
-//        client = createDatabaseConnection()
-//        println "-----3-----------"
-//
-//        return future;
-//    }
-
     private Future<Void> startHttpServer() {
-        def vertx = Vertx.vertx([
-                workerPoolSize: 40
-        ])
 
         println "---startHttpServer 1 ----"
+        createVertx()
+        createDatabaseConnection()
         Future<Void> future = Future.future();
         HttpServer server = vertx.createHttpServer()
         Router router = Router.router(vertx)
-        createDatabaseConnection()
 
 //        router.get("/").handler(this.&indexHandler);
         router.get("/users").handler(this.&indexHandler);
@@ -75,9 +68,6 @@ class FutureDemo extends AbstractVerticle {
                 future.fail(ar.cause());
             }
         });
-
-
-
         return future;
     }
 
@@ -121,32 +111,6 @@ class FutureDemo extends AbstractVerticle {
             }
         }
         println "----indexHandler 6 --"
-
-//        dbClient.getConnection { res ->
-//            println "-----2-----------" + res.properties
-//            if (res.failed()) {
-//                println "-----2 Failed-----------"
-//                println(res.cause().getMessage())
-//                return
-//            }
-//            if (res.succeeded()) {
-//                println "-----2.1-----------"
-//                SQLConnection connection = res.result();
-//                println "-----2.2-----------"
-//                connection.query("SELECT * FROM user", { res2 ->
-//                    println "-----2.3-----------"
-//                    if (res2.succeeded()) {
-//                        def rs = res2.result();
-//                        rs.results.each { line ->
-//                            println('----------' + groovy.json.JsonOutput.toJson(line))
-//                        }
-//                        future.complete()
-//                    } else {
-//                        future.fail(res2.cause());
-//                    }
-//                })
-//            }
-//        }
     }
 
     public void start(Future<Void> startFuture) throws Exception {
