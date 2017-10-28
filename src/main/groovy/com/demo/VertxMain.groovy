@@ -12,7 +12,7 @@ import io.vertx.ext.web.handler.*;
 public class VertxMain {
 
     public static void main(String[] args){
-        RouterDemo.route1()
+        SMTPDemo.sendEmail()
     }
 
     public static String firstMethod() {

@@ -43,6 +43,7 @@ dependencies {
     compile 'io.vertx:vertx-jdbc-client:3.5.0'
     compile 'io.vertx:vertx-web-templ-handlebars:3.5.0'
     compile 'io.vertx:vertx-web-templ-thymeleaf:3.5.0'
+    compile 'io.vertx:vertx-mail-client:3.5.0'
 
 }
 jar {
