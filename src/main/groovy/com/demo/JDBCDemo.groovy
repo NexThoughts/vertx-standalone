@@ -1,10 +1,13 @@
 package com.demo
 
+import io.vertx.core.Future
 import io.vertx.core.Vertx
+import io.vertx.core.http.HttpServer
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.jdbc.JDBCClient
 import io.vertx.ext.sql.SQLClient
 import io.vertx.ext.sql.SQLConnection
+import io.vertx.ext.web.Router
 
 public class JDBCDemo {
 

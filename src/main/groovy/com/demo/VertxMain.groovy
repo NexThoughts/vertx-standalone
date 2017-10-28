@@ -11,8 +11,12 @@ import io.vertx.ext.web.handler.*;
 
 public class VertxMain {
 
-    public static void main(String[] args){
-        EventBusDemo.eventBusExample()
+    public static void main(String[] args) {
+        def vertx = Vertx.vertx([
+                workerPoolSize: 40
+        ])
+        vertx.deployVerticle(new FutureDemo())
+
     }
 
     public static String firstMethod() {
