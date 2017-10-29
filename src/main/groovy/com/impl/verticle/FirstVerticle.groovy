@@ -1,16 +1,13 @@
 package com.impl.verticle
 
 import io.vertx.core.AbstractVerticle
-import io.vertx.core.Future
 
 class FirstVerticle extends AbstractVerticle {
-    @Override
-    public void start(Future<Void> startFuture) {
-        println("Start Your Verticle")
+    public void start() {
+        println("Start Your First Verticle")
     }
 
-    @Override
-    public void stop(Future stopFuture) {
-        println("Stopping Verticle")
+    public void stop() {
+        println("Stopping First Verticle")
     }
 }
