@@ -2,6 +2,7 @@ package com.impl
 
 import com.impl.verticle.FirstVerticle
 import com.impl.verticle.ThirdVerticle
+import io.vertx.core.DeploymentOptions
 import io.vertx.core.Vertx
 
 class VerticleTest {
@@ -10,7 +11,7 @@ class VerticleTest {
 
     public static void main(String[] arg) {
         Vertx vertx = createVertx()
-        deployVerticleAsync(vertx)
+        deployVerticleAsWorker(vertx)
     }
 
     static def createVertx() {
@@ -22,7 +23,6 @@ class VerticleTest {
     }
 
     static def deployVerticleByInstance(Vertx vertx) {
-        //Deploy Vertex
         vertx.deployVerticle(new ThirdVerticle())
     }
 
@@ -40,13 +40,6 @@ class VerticleTest {
                 println("Deployment is failed")
             }
         })
-
-        /*vertx.deployVerticle(new FirstVerticle(), new Handler<AsyncResult<String>>() {
-            @Override
-            public void handle(AsyncResult<String> stringAsyncResult) {
-                System.out.println("FirstVerticle deployment complete")
-            }
-        })*/
     }
 
     static def deployVerticleWithOptions(Vertx vertx) {
@@ -69,5 +62,11 @@ class VerticleTest {
                 println("UnDeployment is failed")
             }
         })
+    }
+
+    static def deployVerticleAsWorker(Vertx vertex) {
+        DeploymentOptions deploymentOptions = new DeploymentOptions()
+        deploymentOptions.worker = true
+        vertex.deployVerticle(new FirstVerticle(), deploymentOptions)
     }
 }
