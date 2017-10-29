@@ -1,6 +1,7 @@
 package com.impl
 
 import com.impl.verticle.FirstVerticle
+import com.impl.verticle.ThirdVerticle
 import io.vertx.core.Vertx
 
 class VerticleTest {
@@ -9,7 +10,7 @@ class VerticleTest {
 
     public static void main(String[] arg) {
         Vertx vertx = createVertx()
-        deployVerticleWithOptions(vertx)
+        deployVerticleAsync(vertx)
     }
 
     static def createVertx() {
@@ -22,7 +23,7 @@ class VerticleTest {
 
     static def deployVerticleByInstance(Vertx vertx) {
         //Deploy Vertex
-        vertx.deployVerticle(new FirstVerticle())
+        vertx.deployVerticle(new ThirdVerticle())
     }
 
     static def deployVerticleByClassName(Vertx vertx) {
