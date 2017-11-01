@@ -1,6 +1,6 @@
 package com.impl
 
-import com.impl.verticle.HttpMicroProdJson
+import com.impl.verticle.consumer.ConsumerVerticle
 import io.vertx.core.Vertx
 
 class HttpMicroTest {
@@ -8,6 +8,8 @@ class HttpMicroTest {
         Vertx vertx = Vertx.vertx()
 //        vertx.deployVerticle(new HttpMicroVerticle())
 //        vertx.deployVerticle(new HttpMicroVerticleWithRoute())
-        vertx.deployVerticle(new HttpMicroProdJson())
+//        vertx.deployVerticle(new HttpMicroProdJson())
+        vertx.deployVerticle(new ConsumerVerticle())
+
     }
 }

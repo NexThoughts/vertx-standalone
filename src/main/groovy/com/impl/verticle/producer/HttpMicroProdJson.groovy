@@ -1,4 +1,4 @@
-package com.impl.verticle
+package com.impl.verticle.producer
 
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.http.HttpHeaders
