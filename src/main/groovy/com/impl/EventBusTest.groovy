@@ -1,11 +1,12 @@
-package com.impl.verticle
+package com.impl
 
+import com.impl.verticle.EventBusSimpleVerticle
 import io.vertx.core.Vertx
 
 class EventBusTest {
 
     public static void main(String[] ar) {
-        sendingMessageAndAcknowledge()
+        sendMessageToEventBusVerticle()
     }
 
     static def simpleEventBusPublishing() {
@@ -114,5 +115,28 @@ class EventBusTest {
             }
         })
         println("Sending has been completed")
+    }
+
+    static def sendMessageToEventBusVerticle() {
+        def vertx = Vertx.vertx()
+
+        vertx.deployVerticle(new EventBusSimpleVerticle())
+
+        def eb = vertx.eventBus()
+        eb.send("local", "pong", { ar ->
+            if (ar.succeeded()) {
+                println("Received reply: ${ar.result().body()}")
+            }
+        })
+
+        /*vertx.deployVerticle(new EventBusJsonProdVerticle())
+
+        def eb = vertx.eventBus()
+        eb.send("hello", "Hello Vertx,\n How it is going.", { ar ->
+            if (ar.succeeded()) {
+                println("Received reply: ${ar.result().body()}")
+            }
+        })*/
+
     }
 }
