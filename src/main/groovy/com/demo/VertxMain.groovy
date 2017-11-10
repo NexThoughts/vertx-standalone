@@ -1,62 +1,33 @@
 package com.demo
 
-import io.vertx.core.Vertx;
-import io.vertx.ext.web.*;
-import io.vertx.ext.jdbc.*;
-import io.vertx.core.json.*;
-import io.vertx.ext.sql.*;
-import io.vertx.core.http.*;
-import io.vertx.ext.web.handler.*;
-
+import io.vertx.core.Vertx
 
 public class VertxMain {
 
     public static void main(String[] args) {
-        def vertx = Vertx.vertx([
-                workerPoolSize: 40
-        ])
-        vertx.deployVerticle(new FutureDemo())
-
-    }
-
-    public static String firstMethod() {
-        def vertx = Vertx.vertx([
+        Vertx vertx = Vertx.vertx([
                 workerPoolSize: 40
         ])
 
-        println "----#######---- Hello -------------"
+        // Hello World Demo
+//        vertx.deployVerticle(new HelloWorldDemo())
 
-        vertx.createHttpServer().requestHandler({ req ->
-            req.response()
-                    .putHeader("content-type", "text/plain")
-                    .end("Hello from Vert.x!")
-        }).listen(8084)
+        // EventBus Example
+//        vertx.deployVerticle(new EventBusDemo())
 
-        return "Success"
+        // Timer Example
+//        vertx.deployVerticle(new TimerDemo())
 
-    }
+        //Router Example
+//        vertx.deployVerticle(new RouterDemo())
 
-    public static String web() {
-        def vertx = Vertx.vertx([
-                workerPoolSize: 40
-        ])
+        // JDBC Example
+//        vertx.deployVerticle(new JDBCDemo())
 
-        def server = vertx.createHttpServer()
+        // Mail Example
+//        vertx.deployVerticle(new SMTPDemo())
 
-        def router = Router.router(vertx)
-
-        router.route().handler({ routingContext ->
-
-            // This handler will be called for every request
-            def response = routingContext.response()
-            response.putHeader("content-type", "text/plain")
-
-            // Write to the response and end it
-            response.end("Hello World from Vert.x-Web!")
-        })
-
-        server.requestHandler(router.&accept).listen(8085)
-        return "Success - 1"
-
+        // Template Example
+//        vertx.deployVerticle(new TemplateDemo())
     }
 }

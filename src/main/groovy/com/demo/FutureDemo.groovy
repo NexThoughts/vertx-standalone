@@ -3,7 +3,6 @@ package com.demo
 import groovy.json.JsonOutput
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Future
-import io.vertx.core.Vertx
 import io.vertx.core.http.HttpServer
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.jdbc.JDBCClient
@@ -13,18 +12,8 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.templ.FreeMarkerTemplateEngine
 
-import java.util.stream.Collectors
-
 class FutureDemo extends AbstractVerticle {
     SQLClient dbclient = null
-    Vertx vertx = null
-
-    private void createVertx() {
-        println "----- Creating Vertx -------"
-        vertx = Vertx.vertx([
-                workerPoolSize: 40
-        ])
-    }
 
     private void createDatabaseConnection() {
         println "----- Creating Database Connection 1 -------"
@@ -43,21 +32,13 @@ class FutureDemo extends AbstractVerticle {
     private Future<Void> startHttpServer() {
 
         println "---startHttpServer 1 ----"
-        createVertx()
         createDatabaseConnection()
         Future<Void> future = Future.future();
         HttpServer server = vertx.createHttpServer()
         Router router = Router.router(vertx)
 
-//        router.get("/").handler(this.&indexHandler);
         router.get("/users").handler(this.&indexHandler);
         println "---- Created users path -------"
-//        router.get("/wiki/:page").handler(this.&pageRenderingHandler)
-//        router.post().handler(BodyHandler.create())
-//        router.post("/save").handler(this.&pageUpdateHandler)
-//        router.post("/create").handler(this.&pageCreateHandler)
-//        router.post("/delete").handler(this.&pageDeletionHandler)
-
         server.requestHandler(router.&accept)
                 .listen(8081, { ar ->
             if (ar.succeeded()) {
@@ -116,7 +97,6 @@ class FutureDemo extends AbstractVerticle {
     public void start(Future<Void> startFuture) throws Exception {
         println "--- Inside Start Server ------1------"
         Future<Void> steps = startHttpServer().compose { v ->
-//            startHttpServer()
             println "--- Inside Start Server ------2------"
         }
         steps.setHandler({ ar ->

@@ -1,20 +1,14 @@
 package com.demo
 
-import io.vertx.core.Vertx
+import io.vertx.core.AbstractVerticle
 import io.vertx.ext.mail.MailClient
 
-class SMTPDemo {
+class SMTPDemo extends AbstractVerticle{
 
-
-    public static sendEmail() {
-
-        def vertx = Vertx.vertx([
-                workerPoolSize: 40
-        ])
-
+    public void start() {
         println "---sendEmail--1--------"
 
-        def config = [:]
+        Map config = [:]
         config.hostname = "smtp.zoho.com"
         config.port = 587
         config.starttls = "REQUIRED"
@@ -48,6 +42,6 @@ class SMTPDemo {
             }
         })
 
-        println "------5--------"
+        println "------Success--------"
     }
 }

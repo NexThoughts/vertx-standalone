@@ -1,22 +1,21 @@
-package com.impl
+package com.demo
 
-import io.vertx.core.Vertx
+import io.vertx.core.AbstractVerticle
 
-class TimerTest {
-    public static void main(String[] arg) {
+class TimerDemo extends AbstractVerticle {
+    public void start() {
+        timerExample()
         periodicExample()
     }
 
-    static def timerExample() {
-        Vertx vertx = Vertx.vertx()
+    def timerExample() {
         vertx.setTimer(1000, { id ->
             println("After One Second this will be printed")
         })
         println("First It will be printed")
     }
 
-    static def periodicExample() {
-        Vertx vertx = Vertx.vertx()
+    def periodicExample() {
         def timerId = vertx.setPeriodic(1000, { id ->
             println "And every second this is printed"
         })

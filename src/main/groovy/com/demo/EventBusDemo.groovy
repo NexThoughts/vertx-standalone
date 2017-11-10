@@ -1,15 +1,9 @@
 package com.demo
 
-import io.vertx.core.Vertx
+import io.vertx.core.AbstractVerticle
 
-class EventBusDemo {
-
-
-    public static eventBusExample() {
-
-        def vertx = Vertx.vertx([
-                workerPoolSize: 40
-        ])
+class EventBusDemo extends AbstractVerticle {
+    public void start() {
         def eventBus = vertx.eventBus()
 
         def consumer = eventBus.consumer("news.india.fashion")
@@ -45,7 +39,6 @@ class EventBusDemo {
 
         eventBus.send("news.india.fashion", "! : ${220 + 500}")
         eventBus.send("news.india.fashion", "! : ${someRandomMethod()}")
-
     }
 
     public static String someRandomMethod() {
@@ -55,5 +48,4 @@ class EventBusDemo {
 
         return "Success"
     }
-
 }
